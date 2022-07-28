@@ -13,7 +13,7 @@ class SignedUser extends User {
         $this->name = $_name;
         $this->lastname = $_lastname;
         $this->mail = $_mail;
-
+        self::$collection[] = $this;
     }
 
     // override

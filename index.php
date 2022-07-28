@@ -19,31 +19,29 @@ $dog_bed = new Bed('dog-bed', 'Feandrea', 30, 'small');
 var_dump($dog_bed);
 
 // ANONYMUS USER 
-$base_user = new AnonUser('Via Carlo Rusconi, 8, 00153 Roma', 35);
-var_dump($base_user);
+$base_user = new AnonUser('Via Carlo Rusconi, 8, 00153 Roma', 100);
 
 // SIGNED-UP USER 
-$signed_user = new SignedUser('Via Gallia, 95, 00183 Roma', 1000, 'Carlo', 'Rossi', 'carlRoss@gmail.com');
-var_dump($signed_user);
+$signed_user = new SignedUser('Via Gallia, 95, 00183 Roma', 20, 'Carlo', 'Rossi', 'carlRoss@gmail.com');
 
 // PURCHASE
-// $signed_user->addProd($dog_treats);
-// $signed_user->addProd($dog_toy);
-$signed_user->aggiungiProdotto($dog_bed);
+$signed_user->addProduct($dog_treats);
+$signed_user->addProduct($dog_toy);
+$signed_user->addProduct($dog_bed);
 
-// $base_user->addProd($dog_treats);
-
-var_dump($signed_user);
-var_dump($base_user);
-
+$base_user->addProduct($dog_treats);
+var_dump($base_user->balance);
 // PAYMENT
-// if($signed_user->makePayment() === 'payment made') {
-//     echo 'Thank you for buying with us!';
-// }
+foreach(User::$collection as $user) {
 
-if($signed_user->effettuaPagamento() === 'ok') {
-    echo 'Grazie per aver completato il tuo acquisto';
+    if($user->pay() === 'ok') {
+        var_dump($base_user->balance);
+        echo "Thank you $user->name for shopping with us! \n";
+    }
 }
+
 ?>
+    
+
 
 

@@ -5,52 +5,46 @@ class User {
 
     public $balance = 0;
 
-    protected $prodottiScelti = [];
-    // protected $choosenProd = [];
+    protected $choosenProd = [];
+
+    public static $collection = array();
 
     public function __construct($_address, $_balance) {
         $this->address = $_address;
         $this->balance = $_balance;
+        self::$collection[] = $this;
     }
 
     public function getInfo() {
         return "Your address is $this->address, your balance is $this->balance";
     }
 
-    public function aggiungiProdotto($prodotto) {
-        $this->prodottiScelti[] = $prodotto;
+    public function addProduct($product) {
+        $this->$choosenProd[] = $product;
     }
 
-    public function getProdottiScelti() {
-        return $this->prodottiScelti;
+    public function getchoosenProd() {
+        return $this->$choosenProd;
     }
 
-    public function calcolaPrezzoTotale() {
-        // Facciamo la somma dei prezzi dei prodotti scelti
-        $sommaTotale = 0;
-        var_dump($sommaTotale);
+    public function paycheck() {
 
-        foreach($this->prodottiScelti as $prodotto) {
-            $sommaTotale += $prodotto->cost;
-            var_dump($sommaTotale);
+        $sum = 0;
+        foreach($this->$choosenProd as $product) {
+            $sum += $product->cost;
         }
 
-        // Leviamo lo sconto
-        var_dump($sommaTotale);
-
-        $sommaTotale -= $sommaTotale * $this->discount / 100;
-        var_dump($sommaTotale);
-
-        return $sommaTotale;
+        // DISCOUNT
+        $sum -= $sum * $this->discount / 100;
+        return $sum;
     }
 
-    public function effettuaPagamento() {
-        $totaleDaPagare = $this->calcolaPrezzoTotale();
-        var_dump($totaleDaPagare);
+    public function pay() {
+        $totalSum = $this->paycheck();
+        $this->balance -= $totalSum;
 
-        if($this->balance < $totaleDaPagare) {
-            
-            die('Saldo non disponibile');
+        if($this->balance < $totalSum) {
+            die("Sorry $this->name your balance is inefficient.");
         } else {
             return 'ok';
         }
