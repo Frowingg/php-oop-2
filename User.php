@@ -5,7 +5,8 @@ class User {
 
     public $balance = 0;
 
-    protected $choosenProd = [];
+    protected $prodottiScelti = [];
+    // protected $choosenProd = [];
 
     public function __construct($_address, $_balance) {
         $this->address = $_address;
@@ -16,37 +17,42 @@ class User {
         return "Your address is $this->address, your balance is $this->balance";
     }
 
-
-    public function addProd($prod) {
-        $this->choosenProd[] = $prod;
-
+    public function aggiungiProdotto($prodotto) {
+        $this->prodottiScelti[] = $prodotto;
     }
 
-    public function getChoosenProd() {
-        return $this->choosenProd;
+    public function getProdottiScelti() {
+        return $this->prodottiScelti;
     }
 
+    public function calcolaPrezzoTotale() {
+        // Facciamo la somma dei prezzi dei prodotti scelti
+        $sommaTotale = 0;
+        var_dump($sommaTotale);
 
-    public function getFinalPrice() {
-        $sum = 0;
-        foreach($this->choosenProd as $product) {
-            $sum += $product->cost;
+        foreach($this->prodottiScelti as $prodotto) {
+            $sommaTotale += $prodotto->cost;
+            var_dump($sommaTotale);
         }
 
-        $sum -= $sum * $this->discount / 100;
-        
-        return $sum;
+        // Leviamo lo sconto
+        var_dump($sommaTotale);
+
+        $sommaTotale -= $sommaTotale * $this->discount / 100;
+        var_dump($sommaTotale);
+
+        return $sommaTotale;
     }
 
-    public function makePayment() {
-        $payCheck = $this->getFinalPrice();
-        var_dump($paycheck);
+    public function effettuaPagamento() {
+        $totaleDaPagare = $this->calcolaPrezzoTotale();
+        var_dump($totaleDaPagare);
 
-        if($this->balance < $payCheck) {
-            die('Insufficient balance');
+        if($this->balance < $totaleDaPagare) {
+            
+            die('Saldo non disponibile');
         } else {
-            // $this->balance -= $payCheck;
-            return 'payment made';
+            return 'ok';
         }
     }
 }

@@ -4,7 +4,7 @@ require_once __DIR__ . '/User.php';
 
 class SignedUser extends User {
     // override
-    private $discount = 20;
+    public $discount = 20;
 
     // override
     public function __construct($_address, $_balance, $_name, $_lastname, $_mail) {
