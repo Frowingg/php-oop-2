@@ -1,6 +1,11 @@
 <?php
 
+require_once __DIR__ . '/SizeProduct.php';
+
 class Prod {
+
+    use SizeProduct;
+
     public $type;
 
     public $brand;

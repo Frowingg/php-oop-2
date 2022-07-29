@@ -44,7 +44,7 @@ class User {
         $this->balance -= $totalSum;
 
         if($this->balance < $totalSum) {
-            die("Sorry $this->name your balance is inefficient.");
+            throw new Exception("Sorry $this->name your balance is inefficient.");
         } else {
             return 'ok';
         }
